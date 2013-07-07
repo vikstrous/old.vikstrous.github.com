@@ -3,10 +3,10 @@
 # ----------------------- #
 
 url: http://vikstrous.github.io
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
-simple_search: http://google.com/search
+title: Viktor's Blog
+subtitle: If it ain't broke, it doesn't have enough features yet.
+author: Viktor Stanchev
+# simple_search: http://google.com/search
 description:
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
