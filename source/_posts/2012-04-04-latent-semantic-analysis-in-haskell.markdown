@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Latent Semantic Analysis in Haskell"
-date: 2013-07-07 02:25
+date: 2012-04-04 02:41
 comments: true
 categories: 
 ---
