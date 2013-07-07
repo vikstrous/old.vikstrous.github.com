@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://vikstrous.github.io/atom.xml" rel="self"/>
   <link href="http://vikstrous.github.io/"/>
-  <updated>2013-07-07T02:18:32-07:00</updated>
+  <updated>2013-07-07T02:37:13-07:00</updated>
   <id>http://vikstrous.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,5 +12,127 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Latent Semantic Analysis in Haskell]]></title>
+    <link href="http://vikstrous.github.io/blog/2013/07/07/latent-semantic-analysis-in-haskell/"/>
+    <updated>2013-07-07T02:25:00-07:00</updated>
+    <id>http://vikstrous.github.io/blog/2013/07/07/latent-semantic-analysis-in-haskell</id>
+    <content type="html"><![CDATA[<p>Last weekend I decided to learn Haskell with <a href="http://fwilliams.org/">Francis Williams</a>. It was an epic adventure. Last night I implemented LSA &ndash; Latent Semantic Analysis using Haskell.</p>
+
+<p>For those of you who are not enlightened: <a href="http://en.wikipedia.org/wiki/Latent_semantic_analysis">LSA</a> takes a list of documents, extracts terms from them, builds a <a href="http://en.wikipedia.org/wiki/Tfidf">tf-idf</a> matrix, then compresses the matrix to build a lower dimensional approximation, to improve the speed and accuracy of measuring the similarity between documents. Sometimes, this is used in combination with clustering to group the documents into categories.</p>
+
+<p>I want to point anyone interested in this towards the following resources that helped me do this:</p>
+
+<ul>
+<li><a href="http://learnyouahaskell.com/">http://learnyouahaskell.com/</a>: The best Haskell tutorial on the internet.</li>
+<li><a href="http://www.puffinwarellc.com/index.php/news-and-articles/articles/33-latent-semantic-analysis-tutorial.html">http://www.puffinwarellc.com/index.php/news-and-articles/articles/33-latent-semantic-analysis-tutorial.html</a>: The best description of LSA I&rsquo;ve seen (python)</li>
+<li><a href="http://journal.batard.info/post/2009/04/08/svd-fun-profit">http://journal.batard.info/post/2009/04/08/svd-fun-profit</a>: Example of how to do SVD (singular value decomposition) in Haskell</li>
+</ul>
+
+
+<p>In case anyone wants to do something similar themselves, here is the code I ended up with. Please let me know (email?) if I&rsquo;m doing something stupid and I&rsquo;ll fix this up. I suspect that I am, considering how new I am to Haskell.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import Data.List
+</span><span class='line'>import Data.Char
+</span><span class='line'>import Numeric.LinearAlgebra
+</span><span class='line'>
+</span><span class='line'>titles = ["The Neatest Little Guide to Stock Market Investing",
+</span><span class='line'>          "Investing For Dummies, 4th Edition",
+</span><span class='line'>          "The Little Book of Common Sense Investing: The Only Way to Guarantee Your Fair Share of Stock Market Returns",
+</span><span class='line'>          "The Little Book of Value Investing",
+</span><span class='line'>          "Value Investing: From Graham to Buffett and Beyond",
+</span><span class='line'>          "Rich Dad's Guide to Investing: What the Rich Invest in, That the Poor and the Middle Class Do Not!",
+</span><span class='line'>          "Investing in Real Estate, 5th Edition",
+</span><span class='line'>          "Stock Investing For Dummies",
+</span><span class='line'>          "Rich Dad's Advisors: The ABC's of Real Estate Investing: The Secrets of Finding Hidden Profits Most Investors Miss" ]
+</span><span class='line'>
+</span><span class='line'>stopwords = ["and","edition","for","in","little","of","the","to"]
+</span><span class='line'>
+</span><span class='line'>text = unlines titles
+</span><span class='line'>
+</span><span class='line'>docs :: [[String]]
+</span><span class='line'>docs = map (filter (not . (`elem` stopwords))) $      -- stopwords filter
+</span><span class='line'>        map words $
+</span><span class='line'>          lines $
+</span><span class='line'>            filter (\x -&gt; isAlpha x || isSpace x) $   -- discard everything except alpha and space characters
+</span><span class='line'>              map toLower text                        -- lowercase the input
+</span><span class='line'>
+</span><span class='line'>tf :: [([Char], Int)]
+</span><span class='line'>tf = filter (\(_,f) -&gt; f&gt;1) $ map (\l@(x:xs) -&gt; (x,length l)) . group . sort $ concat docs -- remove words that appear only once
+</span><span class='line'>
+</span><span class='line'>doc_freq :: Int -&gt; [Char] -&gt; Int
+</span><span class='line'>doc_freq d t = length (filter (==t) (docs !! d))
+</span><span class='line'>
+</span><span class='line'>mat :: Matrix Double
+</span><span class='line'>mat = buildMatrix (length tf) (length docs) ( \(term, doc) -&gt;
+</span><span class='line'>          let occurances = fromIntegral $ doc_freq doc $ fst $ tf !! term -- occurance count
+</span><span class='line'>              docLength = genericLength $ docs !! doc                     -- words per doc
+</span><span class='line'>              numDocs = genericLength docs                                -- number of docs
+</span><span class='line'>              commonness = fromIntegral $ snd $ tf !! term                -- number of docs this word occurs in
+</span><span class='line'>          in (occurances / docLength * log (numDocs / commonness))
+</span><span class='line'>      )
+</span><span class='line'>
+</span><span class='line'>compress k m = u_k &lt;&gt; sigma_k &lt;&gt; v_k where
+</span><span class='line'>  (u,sigma,v) = fullSVD m                 -- get SVD
+</span><span class='line'>  sigma_k = (takeColumns k . takeRows k) sigma    -- keep k values of Σ
+</span><span class='line'>  u_k = takeColumns k u               -- keep k columns of U
+</span><span class='line'>  v_k = takeRows k $ trans v          -- keep k rows of v
+</span><span class='line'>
+</span><span class='line'>reduce_dim k m = v_k where
+</span><span class='line'>        (u,sigma,v) = fullSVD m                         -- mapping of documents to concept space
+</span><span class='line'>        v_k = takeRows k $ trans v                      -- keep k rows of v</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
 </feed>
