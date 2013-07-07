@@ -4,7 +4,7 @@
   <title><![CDATA[Viktor's Blog]]></title>
   <link href="http://vikstrous.github.io/atom.xml" rel="self"/>
   <link href="http://vikstrous.github.io/"/>
-  <updated>2013-07-07T03:29:14-07:00</updated>
+  <updated>2013-07-07T04:03:01-07:00</updated>
   <id>http://vikstrous.github.io/</id>
   <author>
     <name><![CDATA[Viktor Stanchev]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Latent Semantic Analysis in Haskell]]></title>
-    <link href="http://vikstrous.github.io/blog/2013/07/07/latent-semantic-analysis-in-haskell/"/>
-    <updated>2013-07-07T02:25:00-07:00</updated>
-    <id>http://vikstrous.github.io/blog/2013/07/07/latent-semantic-analysis-in-haskell</id>
+    <link href="http://vikstrous.github.io/blog/2012/04/04/latent-semantic-analysis-in-haskell/"/>
+    <updated>2012-04-04T02:41:00-07:00</updated>
+    <id>http://vikstrous.github.io/blog/2012/04/04/latent-semantic-analysis-in-haskell</id>
     <content type="html"><![CDATA[<p>Last weekend I decided to learn Haskell with <a href="http://fwilliams.org/">Francis Williams</a>. It was an epic adventure. Last night I implemented LSA &ndash; Latent Semantic Analysis using Haskell.</p>
 
 <p>For those of you who are not enlightened: <a href="http://en.wikipedia.org/wiki/Latent_semantic_analysis">LSA</a> takes a list of documents, extracts terms from them, builds a <a href="http://en.wikipedia.org/wiki/Tfidf">tf-idf</a> matrix, then compresses the matrix to build a lower dimensional approximation, to improve the speed and accuracy of measuring the similarity between documents. Sometimes, this is used in combination with clustering to group the documents into categories.</p>
