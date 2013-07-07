@@ -19,7 +19,7 @@ I want to point anyone interested in this towards the following resources that h
 
 In case anyone wants to do something similar themselves, here is the code I ended up with. Please let me know (email?) if I'm doing something stupid and I'll fix this up. I suspect that I am, considering how new I am to Haskell.
 
-```
+``` haskell
 import Data.List
 import Data.Char
 import Numeric.LinearAlgebra
@@ -61,10 +61,10 @@ mat = buildMatrix (length tf) (length docs) ( \(term, doc) ->
       )
 
 compress k m = u_k <> sigma_k <> v_k where
-	(u,sigma,v) = fullSVD m			        -- get SVD
-	sigma_k = (takeColumns k . takeRows k) sigma	-- keep k values of Σ
-	u_k = takeColumns k u				-- keep k columns of U
-	v_k = takeRows k $ trans v			-- keep k rows of v
+    (u,sigma,v) = fullSVD m                         -- get SVD
+    sigma_k = (takeColumns k . takeRows k) sigma    -- keep k values of Σ
+    u_k = takeColumns k u                           -- keep k columns of U
+    v_k = takeRows k $ trans v                      -- keep k rows of v
 
 reduce_dim k m = v_k where
         (u,sigma,v) = fullSVD m                         -- mapping of documents to concept space
