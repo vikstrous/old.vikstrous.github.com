@@ -13,9 +13,9 @@ For those of you who are not enlightened: [LSA](http://en.wikipedia.org/wiki/Lat
 
 I want to point anyone interested in this towards the following resources that helped me do this:
 
-- [http://learnyouahaskell.com/](http://learnyouahaskell.com/): The best Haskell tutorial on the internet.
-- [http://www.puffinwarellc.com/index.php/news-and-articles/articles/33-latent-semantic-analysis-tutorial.html](http://www.puffinwarellc.com/index.php/news-and-articles/articles/33-latent-semantic-analysis-tutorial.html): The best description of LSA I've seen (python)
-- [http://journal.batard.info/post/2009/04/08/svd-fun-profit](http://journal.batard.info/post/2009/04/08/svd-fun-profit): Example of how to do SVD (singular value decomposition) in Haskell
+- [The best Haskell tutorial on the internet](http://learnyouahaskell.com/)
+- [The best description of LSA I've seen (python)](http://www.puffinwarellc.com/index.php/news-and-articles/articles/33-latent-semantic-analysis-tutorial.html)
+- [Example of how to do SVD (singular value decomposition) in Haskell](http://journal.batard.info/post/2009/04/08/svd-fun-profit): 
 
 In case anyone wants to do something similar themselves, here is the code I ended up with. Please let me know (email?) if I'm doing something stupid and I'll fix this up. I suspect that I am, considering how new I am to Haskell.
 
