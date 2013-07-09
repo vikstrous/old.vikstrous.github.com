@@ -184,12 +184,11 @@ article {
 #main nav[role=pagination] {
   a {
     margin-right: 15px;
-    background-color: $magenta;
     padding: 3px;
 
     &, &:visited, &:hover {
       text-decoration: none;
-      color: #fff;
+      color: $blue;
     }
   }
 }
