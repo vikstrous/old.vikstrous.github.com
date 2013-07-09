@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Viktor's Blog]]></title>
+  <title><![CDATA[Viktor Stanchev]]></title>
   <link href="http://vikstrous.github.io/atom.xml" rel="self"/>
   <link href="http://vikstrous.github.io/"/>
-  <updated>2013-07-08T21:36:16-07:00</updated>
+  <updated>2013-07-09T01:36:10-07:00</updated>
   <id>http://vikstrous.github.io/</id>
   <author>
     <name><![CDATA[Viktor Stanchev]]></name>
@@ -25,9 +25,9 @@
 <p>I want to point anyone interested in this towards the following resources that helped me do this:</p>
 
 <ul>
-<li><a href="http://learnyouahaskell.com/">http://learnyouahaskell.com/</a>: The best Haskell tutorial on the internet.</li>
-<li><a href="http://www.puffinwarellc.com/index.php/news-and-articles/articles/33-latent-semantic-analysis-tutorial.html">http://www.puffinwarellc.com/index.php/news-and-articles/articles/33-latent-semantic-analysis-tutorial.html</a>: The best description of LSA I&rsquo;ve seen (python)</li>
-<li><a href="http://journal.batard.info/post/2009/04/08/svd-fun-profit">http://journal.batard.info/post/2009/04/08/svd-fun-profit</a>: Example of how to do SVD (singular value decomposition) in Haskell</li>
+<li><a href="http://learnyouahaskell.com/">The best Haskell tutorial on the internet</a></li>
+<li><a href="http://www.puffinwarellc.com/index.php/news-and-articles/articles/33-latent-semantic-analysis-tutorial.html">The best description of LSA I&rsquo;ve seen (python)</a></li>
+<li><a href="http://journal.batard.info/post/2009/04/08/svd-fun-profit">Example of how to do SVD (singular value decomposition) in Haskell</a>:</li>
 </ul>
 
 
